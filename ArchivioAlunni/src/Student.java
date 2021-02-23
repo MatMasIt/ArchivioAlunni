@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 
 public class Student implements Serializable{
 	private String name,surname,classe,picturePath;
