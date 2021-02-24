@@ -107,8 +107,8 @@ public class Finestra extends JFrame implements ActionListener{
 		selector.addActionListener(this);
 
 	}
-	private void criminalDialog(int criminalIndex) {
-		StudentDialog td = new StudentDialog(this, true, this.list,criminalIndex);
+	private void studentDialog(int i) {
+		StudentDialog td = new StudentDialog(this, true, this.list,i);
 		td.setSize(800, 600);
 		td.setVisible(true);
 	}
@@ -133,7 +133,7 @@ public class Finestra extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(add)) {
-			this.criminalDialog(-1);
+			this.studentDialog(-1);
 		}
 		else if(e.getSource().equals(clear)) {
 			this.list.clear();
@@ -141,7 +141,7 @@ public class Finestra extends JFrame implements ActionListener{
 			this.thumbnail.setPath("base.png");
 		}
 		else if(e.getSource().equals(edit)) {
-			this.criminalDialog(table.getSelectedRow());
+			this.studentDialog(table.getSelectedRow());
 		}
 		else if(e.getSource().equals(load)) {
 			JFileChooser jfc = new JFileChooser();
