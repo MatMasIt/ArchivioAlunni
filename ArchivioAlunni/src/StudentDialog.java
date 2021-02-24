@@ -16,7 +16,7 @@ public class StudentDialog extends JDialog implements ActionListener{
 	private JComboBox classField;
 	private JButton save,cancel,setImage;
 	private StudentList list;
-	private int criminalIndex;
+	private int studentIndex;
 	private Finestra parentFrame;
 	private void initComponents() {
 		name= new JLabel("Nome");
@@ -51,14 +51,14 @@ public class StudentDialog extends JDialog implements ActionListener{
 		cancel.addActionListener(this);
 		save.addActionListener(this);
 	}
-	public StudentDialog(Finestra f, boolean modal,StudentList list,int criminalIndex) {
+	public StudentDialog(Finestra f, boolean modal,StudentList list,int studentIndex) {
 		super(f, modal);
 		parentFrame=f;
 		this.list=list;
 		initComponents();
-		this.criminalIndex=criminalIndex;
-		if(criminalIndex!=(-1)) {
-			Student temp= list.get(criminalIndex);
+		this.studentIndex=studentIndex;
+		if(studentIndex!=(-1)) {
+			Student temp= list.get(studentIndex);
 			nameField.setText(temp.getName());
 			surnameField.setText(temp.getSurname());
 			classField.setSelectedItem(temp.getClasse());
@@ -87,8 +87,8 @@ public class StudentDialog extends JDialog implements ActionListener{
 		}
 		else if(e.getSource().equals(save)) {
 			if(path==null) path="base.png";
-			if(this.criminalIndex!=-1) {
-				list.set(this.criminalIndex, new Student(nameField.getText(), surnameField.getText(), (String)classField.getSelectedItem(), path));
+			if(this.studentIndex!=-1) {
+				list.set(this.studentIndex, new Student(nameField.getText(), surnameField.getText(), (String)classField.getSelectedItem(), path));
 			}
 			else {
 				list.add(new Student(nameField.getText(), surnameField.getText(),  (String)classField.getSelectedItem(), path));
