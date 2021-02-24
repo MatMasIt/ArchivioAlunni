@@ -67,9 +67,10 @@ public class Finestra extends JFrame implements ActionListener{
 		
 		this.setJMenuBar(bar);
 		
-		String[] otptions = { "Tutti","1A", "1B", "2A", "2B", "3A" };
+	
+		String[] options = { "Tutti","1A", "1B", "2A", "2B", "3A" };
 
-		selector = new JComboBox(otptions);
+		selector = new JComboBox(options);
 		
 		thumbnailPanel.setLayout(new GridLayout(2,1));
 		
