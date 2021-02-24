@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,7 +15,8 @@ import javax.swing.JTextField;
 public class StudentDialog extends JDialog implements ActionListener{
 	private String path="base.png";
 	private JLabel name,surname,crimes;
-	private JTextField nameField,surnameField,classField;
+	private JTextField nameField,surnameField;
+	private JComboBox classField;
 	private JButton save,cancel,setImage;
 	private StudentList list;
 	private int criminalIndex;
@@ -26,7 +28,9 @@ public class StudentDialog extends JDialog implements ActionListener{
 		
 		nameField= new JTextField(15);
 		surnameField= new JTextField(15);
-		classField= new JTextField(15);
+		String[] otptions = { "1A", "1B", "2A", "2B", "3A" };
+
+		classField = new JComboBox(otptions);
 		
 		setImage= new JButton("Imposta immagine");
 		save = new JButton("Salva");
@@ -60,7 +64,7 @@ public class StudentDialog extends JDialog implements ActionListener{
 			Student temp= list.get(criminalIndex);
 			nameField.setText(temp.getName());
 			surnameField.setText(temp.getSurname());
-			classField.setText(temp.getClasse());
+			classField.setSelectedItem(temp.getClasse());
 			this.path=temp.getPicturePath();
 			if(this.path!=null && this.path!="base.png") {
 				this.setImage.setText("Cambia Immagine");
@@ -87,10 +91,10 @@ public class StudentDialog extends JDialog implements ActionListener{
 		else if(e.getSource().equals(save)) {
 			if(path==null) path="base.png";
 			if(this.criminalIndex!=-1) {
-				list.set(this.criminalIndex, new Student(nameField.getText(), surnameField.getText(), classField.getText(), path));
+				list.set(this.criminalIndex, new Student(nameField.getText(), surnameField.getText(), (String)classField.getSelectedItem(), path));
 			}
 			else {
-				list.add(new Student(nameField.getText(), surnameField.getText(), classField.getText(), path));
+				list.add(new Student(nameField.getText(), surnameField.getText(),  (String)classField.getSelectedItem(), path));
 			}
 	        parentFrame.updateTable();
 	        parentFrame.getThumbnail().setPath(path);
