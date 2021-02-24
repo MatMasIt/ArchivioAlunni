@@ -1,5 +1,4 @@
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,8 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.io.IOException;
-import java.util.Calendar;
-
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,8 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class Finestra extends JFrame implements ActionListener{
@@ -32,6 +28,7 @@ public class Finestra extends JFrame implements ActionListener{
 	private JThumbnail thumbnail;
 	private StudentList list;
 	private JPanel thumbnailPanel,tablePanel;
+	private JComboBox selector;
 	private JSplitPane splitPane;
 	private void initComponents() {
 		bar= new JMenuBar();
@@ -70,8 +67,15 @@ public class Finestra extends JFrame implements ActionListener{
 		
 		this.setJMenuBar(bar);
 		
+		String[] otptions = { "Tutti","1A", "1B", "2A", "2B", "3A" };
+
+		selector = new JComboBox(otptions);
+		
+		thumbnailPanel.setLayout(new GridLayout(2,1));
 		
 		thumbnailPanel.add(thumbnail);
+		
+		thumbnailPanel.add(selector);
 		
 		tablePanel  = new JPanel();
 		
@@ -97,6 +101,11 @@ public class Finestra extends JFrame implements ActionListener{
 
             }
         });
+		
+		
+		
+		selector.addActionListener(this);
+
 	}
 	private void criminalDialog(int criminalIndex) {
 		StudentDialog td = new StudentDialog(this, true, this.list,criminalIndex);
@@ -112,6 +121,7 @@ public class Finestra extends JFrame implements ActionListener{
 		Finestra f= new Finestra();
 		f.setSize(1000,900);
 		f.setVisible(true);
+		f.setTitle("ArchivioAlunni");
 	}
 	public void updateTable() {
 		defaultTableModel.setRowCount(0);
@@ -175,7 +185,21 @@ public class Finestra extends JFrame implements ActionListener{
 				this.thumbnail.setPath("base.png");
 			}
 		}
+		else if(e.getSource().equals(selector)) {
+				this.showFiltered((String)selector.getSelectedItem());
+		}
 		
+	}
+	
+	private void showFiltered(String classe) {
+		defaultTableModel.setRowCount(0);
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getClasse().equals(classe) || classe.equals("Tutti")) {
+				Object[] row = {list.get(i).getName(),list.get(i).getSurname(),list.get(i).getClasse()};
+				defaultTableModel.addRow(row);
+			}
+			this.thumbnail.setPath("base.png");
+		}
 	}
 	public JThumbnail getThumbnail() {
 		return thumbnail;
