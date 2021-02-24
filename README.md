@@ -3,6 +3,7 @@ Yet Another Java FIle database Swing Gui [SCHOOL]
 
 And now, our `Feature Presentation`:
 * JSplitPane
+* JComboBox
 * JThumbnail
 * JDialog
 * JTable
